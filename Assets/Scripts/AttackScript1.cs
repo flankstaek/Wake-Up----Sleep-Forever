@@ -10,22 +10,23 @@ public class AttackScript1 : MonoBehaviour {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
 
-        float angle = Mathf.Atan2(vAxis * Mathf.PI, hAxis * Mathf.PI);
-        Vector3 newPos = new Vector3(.5f * Mathf.Cos(angle), .5f * Mathf.Sin(angle), 1);
+        if(hAxis != 0 || vAxis != 0) {
+            renderer.enabled = true;
 
-        transform.position = newPos;
+            float angle = Mathf.Atan2(vAxis * Mathf.PI, hAxis * Mathf.PI);
+            Vector3 newPos = new Vector3(.5f * Mathf.Cos(angle), .5f * Mathf.Sin(angle), 1);
 
-        
-        transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * angle - 90f);
+            transform.position = newPos;
 
-        /*
-        float angle = Random.Range(0, Mathf.PI * 2);
 
-        Vector3 point = new Vector3(r * Mathf.Cos(angle), r * Mathf.Sin(angle), 1);
-        */
+            transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * angle - 90f);
+        }
+        else {
+            renderer.enabled = false;
+        }
     }
 
-	void OnTriggerEnter(Collider other) {
+    void OnTriggerEnter(Collider other) {
         Debug.Log("Destroyed shape");
         Destroy(other.gameObject);
     }
