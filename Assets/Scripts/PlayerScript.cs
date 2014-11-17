@@ -11,19 +11,24 @@ public class PlayerScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
 
-        //Enable when not testing inputs
-        // if(other.tag.Equals("circle")) {
-        //     Attack1.SetActive(true);
-        //     Debug.Log("Circle collided");
-        // }
-        // if(other.tag.Equals("square")) {
-        //     Attack1.SetActive(false);
-        //     Debug.Log("Square collided");
-        // }
-        // if(other.tag.Equals("triangle")) {
-        //     Attack1.SetActive(false);
-        //     Debug.Log("Triangle collided");
-        // }
+        if(other.tag.Equals("circle")) {
+            Attack1.SetActive(true);
+            Attack2.SetActive(false);
+            Attack3.SetActive(false);
+            Debug.Log("Circle collided");
+        }
+        if(other.tag.Equals("square")) {
+            Attack1.SetActive(false);
+            Attack2.SetActive(true);
+            Attack3.SetActive(false);
+            Debug.Log("Square collided");
+        }
+        if(other.tag.Equals("triangle")) {
+            Attack1.SetActive(false);
+            Attack2.SetActive(false);
+            Attack3.SetActive(true);
+            Debug.Log("Triangle collided");
+        }
         Destroy(other.gameObject);
     }
 }
