@@ -9,25 +9,28 @@ public class PlayerScript : MonoBehaviour {
 
     public string lastHit = "";
 
-    void OnTriggerEnter(Collider other) {
+    public GameScript gs;
 
-        if(other.tag.Equals("circle")) {
+    void OnTriggerEnter(Collider other) {
+        gs.hitEnemy();
+
+        if(other.tag.Equals("circle") && lastHit != "circle") {
+            lastHit = "circle";
             Attack1.SetActive(true);
             Attack2.SetActive(false);
             Attack3.SetActive(false);
-            Debug.Log("Circle collided");
         }
-        if(other.tag.Equals("square")) {
+        if(other.tag.Equals("square") && lastHit != "square") {
+            lastHit = "square";
             Attack1.SetActive(false);
             Attack2.SetActive(true);
             Attack3.SetActive(false);
-            Debug.Log("Square collided");
         }
-        if(other.tag.Equals("triangle")) {
+        if(other.tag.Equals("triangle") && lastHit != "triangle") {
+            lastHit = "triangle";
             Attack1.SetActive(false);
             Attack2.SetActive(false);
             Attack3.SetActive(true);
-            Debug.Log("Triangle collided");
         }
         Destroy(other.gameObject);
     }

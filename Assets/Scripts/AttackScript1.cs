@@ -6,6 +6,8 @@ public class AttackScript1 : MonoBehaviour {
     float hAxis;
     float vAxis;
 
+    public GameScript gs;
+
     void Update() {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
@@ -29,7 +31,7 @@ public class AttackScript1 : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        Debug.Log("Attack 1 Destroy");
+        gs.killEnemy();
         Destroy(other.gameObject);
     }
 

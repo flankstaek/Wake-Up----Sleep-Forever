@@ -3,9 +3,11 @@ using System.Collections;
 
 public class Attack2Collider : MonoBehaviour {
 
+    public GameScript gs;
+
+
  void OnTriggerEnter(Collider other) {
-        Debug.Log(other.gameObject.tag);
-        Debug.Log("Attack 2 Destroy");
+        gs.killEnemy();
         Destroy(other.gameObject);
 }
 }
