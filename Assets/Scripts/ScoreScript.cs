@@ -5,6 +5,8 @@ public class ScoreScript : MonoBehaviour {
 
     bool gameover = true;
 
+    public GameScript gs;
+
 	// Use this for initialization
 	void Awake () {
 	   DontDestroyOnLoad(transform.gameObject);
@@ -14,6 +16,12 @@ public class ScoreScript : MonoBehaviour {
         if(gameover && Application.loadedLevelName == "gameover") {
             transform.position = new Vector3(.5f, .5f, 0f);
             gameover = false;
+        }
+
+        if(Input.GetKeyDown("space")) {
+            gs.resetScore();
+            Application.LoadLevel("sleep");
+            Destroy(gameObject);
         }
     }
 

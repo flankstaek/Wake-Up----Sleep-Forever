@@ -25,4 +25,8 @@ public class GameScript : MonoBehaviour {
     public void hitEnemy() {
         scoreVal -= 100;
     }
+
+    public void resetScore() {
+        scoreVal = 0;
+    }
 }
