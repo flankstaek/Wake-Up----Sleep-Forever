@@ -7,7 +7,7 @@ public class EnemyControl : MonoBehaviour {
     public GameObject squEnemy;
     public GameObject cirEnemy;
 
-    public float spawnRate = 1.0f;
+    public float spawnRate = 0.0f;
     private float lastSpawn = 0.0f;
 
     private int enSpawn;
@@ -20,6 +20,10 @@ public class EnemyControl : MonoBehaviour {
 	       if(Time.time - lastSpawn > spawnRate) {
             lastSpawn = Time.time;
             Instantiate(randEnemy(), randPoint(), Quaternion.identity);
+           }
+
+           if(Time.fixedTime % 10 == 0) {
+            spawnRate = spawnRate / 2;
            }
 	}
 
