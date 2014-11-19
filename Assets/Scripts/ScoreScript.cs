@@ -23,6 +23,9 @@ public class ScoreScript : MonoBehaviour {
             Application.LoadLevel("sleep");
             Destroy(gameObject);
         }
+        if(Input.GetKeyDown("escape")) {
+            Application.Quit();
+        }
     }
 
 }

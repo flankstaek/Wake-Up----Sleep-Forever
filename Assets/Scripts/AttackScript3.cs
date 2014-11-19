@@ -32,12 +32,9 @@ public class AttackScript3 : MonoBehaviour {
             delayed = true;
             timeKeeper = Time.time;
         }
-
         if(buttonAxis > 0 && buttonAxis < 1) {
             timeKeeper = Time.time;
         }
-
-
 	}
 
      void OnTriggerEnter(Collider other) {
