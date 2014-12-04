@@ -11,11 +11,11 @@ public class GameScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        scoreVal += (int)((double)Time.time * 10.0) - count;
+        scoreVal += (int)((double)Time.timeSinceLevelLoad * 10.0) - count;
 
         scoreObj.guiText.text = scoreVal.ToString();
 
-        count = (int)((double)Time.time * 10.0);
+        count = (int)((double)Time.timeSinceLevelLoad * 10.0);
 	}
 
     public void killEnemy() {
@@ -23,7 +23,9 @@ public class GameScript : MonoBehaviour {
     }
 
     public void hitEnemy() {
-        scoreVal -= 100;
+        if(Time.timeSinceLevelLoad > 4) {
+            scoreVal -= 100;
+        }
     }
 
     public void resetScore() {

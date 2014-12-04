@@ -11,9 +11,6 @@ public class EnemyControl : MonoBehaviour {
     private float lastSpawn = 0.0f;
 
     private int enSpawn;
-
-	void Start () {
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -49,7 +46,6 @@ public class EnemyControl : MonoBehaviour {
         float angle = Random.Range(0, Mathf.PI * 2);
 
         Vector3 point = new Vector3(r * Mathf.Cos(angle), r * Mathf.Sin(angle), 1);
-
         return point;
     }
 }

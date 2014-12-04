@@ -7,9 +7,9 @@ public class ScoreScript : MonoBehaviour {
 
     public GameScript gs;
 
-	// Use this for initialization
 	void Awake () {
 	   DontDestroyOnLoad(transform.gameObject);
+       Screen.showCursor = false;
 	}
 
     void Update() {
@@ -17,8 +17,7 @@ public class ScoreScript : MonoBehaviour {
             transform.position = new Vector3(.5f, .5f, 0f);
             gameover = false;
         }
-
-        if(Input.GetKeyDown("space")) {
+        if(Input.GetAxis("Start") > 0) {
             gs.resetScore();
             Application.LoadLevel("sleep");
             Destroy(gameObject);

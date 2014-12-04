@@ -7,6 +7,7 @@ public class AttackScript1 : MonoBehaviour {
     float vAxis;
 
     public GameScript gs;
+    public MainMenu ms;
 
     void Update() {
         hAxis = Input.GetAxis("Horizontal");
@@ -31,7 +32,8 @@ public class AttackScript1 : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        gs.killEnemy();
+        if(gs != null) {gs.killEnemy();}
+        if(ms != null) {ms.addKill();}
         Destroy(other.gameObject);
     }
 

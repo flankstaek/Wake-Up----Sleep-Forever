@@ -7,38 +7,37 @@ public class AttackScript3 : MonoBehaviour {
     public float timeActive = 0.0f;
     public float timeDelay = 0.0f;
     float timeKeeper = 0.0f;
-    bool delayed = true;
+    bool delayed = false;
 
     public GameScript gs;
+    public MainMenu ms;
 	
 	// Update is called once per frame
 	void Update () {
         buttonAxis = Input.GetAxis("Button");
 
-        if(buttonAxis != 1) {
+        if(!delayed) {
             renderer.enabled = false;
             collider.enabled = false;
         }
-        else if(Time.time - timeKeeper <= timeActive && delayed) {
+        if(Time.timeSinceLevelLoad - timeKeeper > timeDelay && !delayed && buttonAxis != 0) {
+            delayed = true;
+            timeKeeper = Time.timeSinceLevelLoad;
+            Debug.Log("true");
+        }
+        if(delayed && Time.timeSinceLevelLoad - timeKeeper <= timeActive) {
             renderer.enabled = true;
             collider.enabled = true;
         }
-        else if(Time.time - timeKeeper > timeActive) {
+        else if(delayed){
             delayed = false;
-            renderer.enabled = false;
-            collider.enabled = false;
-        }
-        if(Time.time - timeKeeper >= timeDelay && !delayed){
-            delayed = true;
-            timeKeeper = Time.time;
-        }
-        if(buttonAxis > 0 && buttonAxis < 1) {
-            timeKeeper = Time.time;
+            timeKeeper = Time.timeSinceLevelLoad;
         }
 	}
 
      void OnTriggerEnter(Collider other) {
-        gs.killEnemy();
+        if(gs != null) {gs.killEnemy();}
+        if(ms != null) {ms.addKill();}
         Destroy(other.gameObject);
     }
 
