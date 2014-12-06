@@ -38,14 +38,19 @@ public class MainMenu : MonoBehaviour {
     private float alph = 0;
     private bool imgFade = false;
 
+    private float tfo = .5f; //Time that text is faded out
+    private float tfd = .25f; //Time that text is displayed
+    private float tad = 2.6f; //Time between attacks being sent
+    private float tbf = .5f; //Time before fading in next attack
+
     void Awake() {
         Screen.showCursor = false;
         lines[0] = "Welcome to Wake Up // Sleep Forever";
-        lines[1] = "Getting hit by an enemy changes your attack";
-        lines[2] = "This is the RED attack.\nPress two adjacent bumpers to create a shield";
-        lines[3] = "This is the BLUE attack.\nPoint the joystick towards the direction you want to shield";
-        lines[4] = "This is the GREEN attack.\nPress any face button to create a temporary shield.";
-        lines[5] = "You lose if you get hit by the same color enemy as you.";
+        lines[1] = "Getting hit by an enemy changes your defense type";
+        lines[2] = "This is the RED defense\nPress two adjacent bumpers to create a shield";
+        lines[3] = "This is the BLUE defense\nPoint the joystick towards the direction you want to shield";
+        lines[4] = "This is the GREEN defense\nPress any face button to create a temporary shield";
+        lines[5] = "You lose if you get hit by the same color enemy as you";
         lines[6] = "Press START when you're ready to start playing";
 
         curText = lines[textMarker];
@@ -57,9 +62,10 @@ public class MainMenu : MonoBehaviour {
         float width = Screen.width;
         float height = (403f / 1275f) * width;
         float left = (Screen.width - width)/ 2;
-        float top = (Screen.height * .0f);
+        float top = (Screen.height * .5f) - height/2;
         drawspace = new Rect(left, top, width, height);
 
+        GameObject.Find("PlayerModel").renderer.material.color = Color.black;
     }
 
     void Start() {
@@ -73,6 +79,7 @@ public class MainMenu : MonoBehaviour {
         }
         else if(alph >= 1f) {
             imgFade = true;
+            GameObject.Find("PlayerModel").renderer.material.color = Color.white;
         }
         if(imgFade && alph > 0) {
             alph -= .1f * Time.deltaTime;
@@ -89,33 +96,33 @@ public class MainMenu : MonoBehaviour {
         if(Input.GetKeyDown("escape")) {
             Application.Quit();
         }
-        if(textMarker == 0 && faded && checkTime(.75f) && imgFade && alph <= 0) {
+        if(textMarker == 0 && faded && checkTime(tfo) && imgFade && alph <= 0) {
             fadeTextIn();
         }
-        if(textMarker == 0 && !faded && checkTime(1.5f)) {
+        if(textMarker == 0 && !faded && checkTime(tfd)) {
             fadeTextOut(1);
         }
-        if(textMarker == 1 && faded && checkTime(.5f)) {
+        if(textMarker == 1 && faded && checkTime(tfo)) {
             fadeTextIn();
         }
-        if(textMarker == 1 && !faded && checkTime(.5f)) {
+        if(textMarker == 1 && !faded && checkTime(tfd)) {
             if(spawn) {Instantiate(squEnemy, new Vector3(0f, -7f, 1f), Quaternion.identity); spawn = false; }
             fadeTextOut(2);
         }
-        if(textMarker == 2 && faded && checkTime(.5f)) {
+        if(textMarker == 2 && faded && checkTime(tfo)) {
             fadeTextIn();
         }
-        if(textMarker == 2 && !faded && checkTime(.75f)) {
+        if(textMarker == 2 && !faded && checkTime(tfd)) {
             spawn = true;
             fadeTextOut(3);
 
         }
-        if(textMarker == 3 && checkTime(2f) && killed != 3) {
+        if(textMarker == 3 && checkTime(tad) && killed != 3) {
             if(spawn) {
                 Instantiate(triEnemy, new Vector3(0.5f, -7, 1f), Quaternion.identity);
                 timeKeeper = Time.time;
                 playerCollider(false);}}
-        if(textMarker == 3 && killed == 3 && checkTime(1f) && faded) {
+        if(textMarker == 3 && killed == 3 && checkTime(tbf) && faded) {
             if(spawn) {
                 playerCollider(true);
                 Instantiate(cirEnemy, new Vector3(9f, 0f, 1f), Quaternion.identity);
@@ -123,44 +130,44 @@ public class MainMenu : MonoBehaviour {
                 attackOff();}
                 fadeTextIn();
             }
-            if(textMarker == 3 && killed == 3 && checkTime(.5f) && !faded) {
-                spawn = true;
-                fadeTextOut(4);
-            }
-            if(textMarker == 4 && checkTime(2f) && killed != 6) {
-                if(spawn) {
-                    Instantiate(squEnemy, new Vector3(-9f, 0f, 1f), Quaternion.identity);
-                    timeKeeper = Time.time;
-                    playerCollider(false);}}
-            if(textMarker == 4 && killed == 6 && checkTime(1f) && faded) {
-                if(spawn) {
-                    playerCollider(true);
-                    Instantiate(triEnemy, new Vector3(-.5f, -7f, 1f), Quaternion.identity);
-                    spawn = false;
-                    attackOff();}
-                    fadeTextIn();
-                }
-            if(textMarker == 4 && killed == 6 && checkTime(.5f) && !faded) {
-                spawn = true;
-                fadeTextOut(5);
-            }
-            if(textMarker == 5 && checkTime(1f) && killed != 9) {
-                if(spawn) {
-                    Instantiate(cirEnemy, new Vector3(0f, 7f, 1f), Quaternion.identity);
-                    timeKeeper = Time.time;
-                    playerCollider(false);}}
-            
-            if(textMarker == 5 && killed == 9 && checkTime(.5f) && faded) {
-                fadeTextIn();
+        if(textMarker == 3 && killed == 3 && checkTime(tfd) && !faded) {
+            spawn = true;
+            fadeTextOut(4);
+        }
+        if(textMarker == 4 && checkTime(tad) && killed != 6) {
+            if(spawn) {
+                Instantiate(squEnemy, new Vector3(0f, 7f, 1f), Quaternion.identity);
+                timeKeeper = Time.time;
+                playerCollider(false);}}
+        if(textMarker == 4 && killed == 6 && checkTime(tbf) && faded) {
+            if(spawn) {
+                playerCollider(true);
+                Instantiate(triEnemy, new Vector3(-9f, 0f, 1f), Quaternion.identity);
                 spawn = false;
-                attackOff();
-            }
-            if(textMarker == 5 && checkTime(1f) && !faded) {
-                fadeTextOut(6);
-            }
-            if(textMarker == 6 && checkTime(0f) && faded) {
+                attackOff();}
                 fadeTextIn();
             }
+        if(textMarker == 4 && killed == 6 && checkTime(tfd) && !faded) {
+            spawn = true;
+            fadeTextOut(5);
+        }
+        if(textMarker == 5 && checkTime(tad) && killed != 9) {
+            if(spawn) {
+                Instantiate(cirEnemy, new Vector3(0f, -7f, 1f), Quaternion.identity);
+                timeKeeper = Time.time;
+                playerCollider(false);}}
+        
+        if(textMarker == 5 && killed == 9 && checkTime(tfo) && faded) {
+            fadeTextIn();
+            spawn = false;
+            attackOff();
+        }
+        if(textMarker == 5 && checkTime(tfd) && !faded) {
+            fadeTextOut(6);
+        }
+        if(textMarker == 6 && checkTime(0f) && faded) {
+            fadeTextIn();
+        }
 
             }
 

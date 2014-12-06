@@ -23,7 +23,6 @@ public class AttackScript3 : MonoBehaviour {
         if(Time.timeSinceLevelLoad - timeKeeper > timeDelay && !delayed && buttonAxis != 0) {
             delayed = true;
             timeKeeper = Time.timeSinceLevelLoad;
-            Debug.Log("true");
         }
         if(delayed && Time.timeSinceLevelLoad - timeKeeper <= timeActive) {
             renderer.enabled = true;

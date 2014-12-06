@@ -31,4 +31,8 @@ public class GameScript : MonoBehaviour {
     public void resetScore() {
         scoreVal = 0;
     }
+
+    public int getScore() {
+        return scoreVal;
+    }
 }

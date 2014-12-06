@@ -18,11 +18,10 @@ public class PlayerScript : MonoBehaviour {
     public GameScript gs;
 
     void OnTriggerEnter(Collider other) {
-        gs.hitEnemy();
-
         if(other.tag.Equals(lastHit)) {
             Application.LoadLevel("gameover");
         }
+        gs.hitEnemy();
         if(other.tag.Equals("circle") && lastHit != "circle") {
             lastHit = "circle";
             Attack1.SetActive(true);
